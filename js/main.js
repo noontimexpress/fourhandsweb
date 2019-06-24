@@ -177,6 +177,7 @@ function getComputerChoice() {
 }
 
 function resetround() {
+    modal.style.display = 'none';
     zero.style.color = "#333333";
     five.style.color = "#333333";
     ten.style.color = "#333333";
@@ -189,6 +190,7 @@ function resetround() {
 
 button.addEventListener("click", function(event) {
     resetround();
+    speechRec.start();
     clearInterval(myInterval);
     myInterval = setInterval(function() {
         time--;
@@ -201,9 +203,7 @@ button.addEventListener("click", function(event) {
             numbers.innerHTML = time;
         }
     }, 1000);
-    speechRec.start();
     setTimeout(getComputerChoice(), 3000);
     setTimeout(identifyHands(), 3000);
-    
     setTimeout(() => { guessedCorrect(cool, playertotal); }, 5000);
 })
