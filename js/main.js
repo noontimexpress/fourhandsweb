@@ -2,6 +2,10 @@ let knn;
 var hzero = document.getElementById("hzero")
 var hfive = document.getElementById("hfive")
 var hten = document.getElementById("hten")
+const modal = document.querySelector('.modal');
+var computertotal;
+var cool;
+var playertotal;
 
 function setup() {
     createCanvas(320, 240);
@@ -13,21 +17,40 @@ function setup() {
     y = height / 2;
 }
 
+function guessedCorrect(cool){
+    console.log(cool);
+    console.log(playertotal + computertotal);
+    if (cool == playertotal + computertotal) {
+        result.innerHTML = "<h1 class='text-win'>You Win</h1>";
+        modal.style.display = 'block';
+        return 'win';
+    }
+    else {
+        result.innerHTML = "<h1 class='text-win'>You Lose</h1>";
+        modal.style.display = 'block';
+        return 'lose';
+    }
+}
+
 function gotResult(error, result) {
     if (error) {
         console.error(error);
         }
     if (result.label == "zero") {
             hzero.style.color = "#dc3545";
+            playertotal = 0;
         }
     if (result.label == "five") {
             hfive.style.color = "#dc3545";
+            playertotal = 5;
         }
     if (result.label == "five1") {
             hfive.style.color = "#dc3545";
+            playertotal = 5;
         }
     if (result.label == "ten") {
             hten.style.color = "#dc3545";
+            playertotal = 10;
         }
     }
 
@@ -109,21 +132,20 @@ var myInterval;
 function gotSpeech() {
     if (speechRec.resultValue) {
         cool = speechRec.resultString;
-        console.log(cool)
         if (cool == "0") {
-            zero.style.color = "#dc3545"
+            zero.style.color = "#dc3545";
         }
         if (cool == "5") {
-            five.style.color = "#dc3545"
+            five.style.color = "#dc3545";
         }
         if (cool == "10") {
-            ten.style.color = "#dc3545"
+            ten.style.color = "#dc3545";
         }
         if (cool == "15") {
-            fifteen.style.color = "#dc3545"
+            fifteen.style.color = "#dc3545";
         }
         if (cool == "20") {
-            twenty.style.color = "#dc3545"
+            twenty.style.color = "#dc3545";
         }
     }
 }
@@ -134,23 +156,23 @@ function getComputerChoice() {
         firsthand.src = 'fistleft.png';
         secondhand.src = 'fistright.png';
         console.log('0,0');
-        return '0,0';
+        computertotal = 0;
     }
     if (rand <= .50) {
         firsthand.src = 'fistleft.png';
         secondhand.src = 'fiveright.png';
         console.log('0,5');
-        return '0,5';
+        computertotal = 5;
     } else if (rand <= .75) {
         firsthand.src = 'fiveleft.png';
         secondhand.src = 'fistright.png';
         console.log('5,0');
-        return '5,0';
+        computertotal = 5;
     } else {
         firsthand.src = 'fiveleft.png';
         secondhand.src = 'fiveright.png';
         console.log('5,5');
-        return '5,5';
+        computertotal = 10;
     }
 }
 
@@ -167,9 +189,6 @@ function resetround() {
 
 button.addEventListener("click", function(event) {
     resetround();
-    speechRec.start();
-    setTimeout("getComputerChoice()", 3000);
-    setTimeout("identifyHands()", 3000);
     clearInterval(myInterval);
     myInterval = setInterval(function() {
         time--;
@@ -182,4 +201,9 @@ button.addEventListener("click", function(event) {
             numbers.innerHTML = time;
         }
     }, 1000);
+    speechRec.start();
+    setTimeout(getComputerChoice(), 3000);
+    setTimeout(identifyHands(), 3000);
+    
+    setTimeout(() => { guessedCorrect(cool, playertotal); }, 5000);
 })
