@@ -106,3 +106,7 @@ body {
     grid-template-columns: repeat(5, 1fr);
     margin-top: 3rem;
 }
+
+.modal {
+    display: none;
+}

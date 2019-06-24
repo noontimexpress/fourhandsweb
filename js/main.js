@@ -8,7 +8,22 @@ function setup() {
     knn = ml5.KNNClassifier();
     x = width / 2;
     y = height / 2;
-  }
+}
+
+function gotResult(error, result) {
+    if (error) {
+        console.error(error);
+    } else {
+        console.log(result);
+    }
+}
+
+function identifyHands() {
+    if (knn.getNumLabels() > 0) {
+        const logits = features.infer(video);
+        knn.classify(logits, gotResult);
+    }
+}
 
 function keyPressed() {
     const logits = features.infer(video);
@@ -22,7 +37,8 @@ function keyPressed() {
                 i++;
             };
         }, 200);
-    } if (key == '1') {
+    }
+    if (key == '1') {
         setInterval(function() {
             if (i < j) {
                 knn.addExample(logits, 'five');
@@ -48,19 +64,18 @@ function keyPressed() {
                 i++;
             };
         }, 200);
-    }
-    else if (key == 's') {
+    } else if (key == 's') {
         knn.save('model.json');
     }
 }
 
+
 function modelReady() {
     console.log('model ready!');
-    // Comment back in to load your own model!
-    // knn.load('model.json', function() {
-    //   console.log('knn loaded');
-    // });
-  }
+    knn.load('model.json', function() {
+        console.log('knn loaded');
+    });
+};
 
 let speechRec = new p5.SpeechRec('en-US', gotSpeech);
 
@@ -100,19 +115,20 @@ function gotSpeech() {
     }
 }
 
- function getComputerChoice() {
+function getComputerChoice() {
     const rand = Math.random();
-    if(rand < 0.25) {
+    if (rand < 0.25) {
         firsthand.src = 'fistleft.png';
         secondhand.src = 'fistright.png';
         console.log('0,0');
         return '0,0';
-    } if(rand <= .50) {
+    }
+    if (rand <= .50) {
         firsthand.src = 'fistleft.png';
         secondhand.src = 'fiveright.png';
         console.log('0,5');
         return '0,5';
-    } else if(rand <= .75) {
+    } else if (rand <= .75) {
         firsthand.src = 'fiveleft.png';
         secondhand.src = 'fistright.png';
         console.log('5,0');
@@ -123,28 +139,27 @@ function gotSpeech() {
         console.log('5,5');
         return '5,5';
     }
-} 
+}
 
-button.addEventListener("click", function(event){
+button.addEventListener("click", function(event) {
     zero.style.color = "#333333"
     five.style.color = "#333333"
     ten.style.color = "#333333"
     fifteen.style.color = "#333333"
     twenty.style.color = "#333333"
-    speechRec.start(); 
+    speechRec.start();
     setTimeout("getComputerChoice()", 3000);
+    setTimeout("identifyHands()", 3000);
     clearInterval(myInterval);
-    myInterval = setInterval(function(){
+    myInterval = setInterval(function() {
         time--;
-        if (time == -1){
+        if (time == -1) {
             button.innerHTML = "Again";
             clearInterval(myInterval);
             time = 4;
-        }
-        else {
+        } else {
             button.innerHTML = "Start";
             numbers.innerHTML = time;
         }
     }, 1000);
 })
-
