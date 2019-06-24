@@ -1,5 +1,66 @@
+let knn;
+
 function setup() {
+    createCanvas(320, 240);
+    video = createCapture(VIDEO);
+    video.size(320, 240);
+    features = ml5.featureExtractor('MobileNet', modelReady);
+    knn = ml5.KNNClassifier();
+    x = width / 2;
+    y = height / 2;
+  }
+
+function keyPressed() {
+    const logits = features.infer(video);
+    var i = 0;
+    var j = 21;
+    if (key == '0') {
+        setInterval(function() {
+            if (i < j) {
+                knn.addExample(logits, 'zero');
+                console.log('zero');
+                i++;
+            };
+        }, 200);
+    } if (key == '1') {
+        setInterval(function() {
+            if (i < j) {
+                knn.addExample(logits, 'five');
+                console.log('five');
+                i++;
+            };
+        }, 200);
+    }
+    if (key == '2') {
+        setInterval(function() {
+            if (i < j) {
+                knn.addExample(logits, 'five1');
+                console.log('five1');
+                i++;
+            };
+        }, 200);
+    }
+    if (key == '3') {
+        setInterval(function() {
+            if (i < j) {
+                knn.addExample(logits, 'ten');
+                console.log('ten');
+                i++;
+            };
+        }, 200);
+    }
+    else if (key == 's') {
+        knn.save('model.json');
+    }
 }
+
+function modelReady() {
+    console.log('model ready!');
+    // Comment back in to load your own model!
+    // knn.load('model.json', function() {
+    //   console.log('knn loaded');
+    // });
+  }
 
 let speechRec = new p5.SpeechRec('en-US', gotSpeech);
 
