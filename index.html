@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.min.js"></script>
+    <script src="https://unpkg.com/ml5@0.3.1/dist/ml5.min.js"></script>
+    <script src="p5.speech.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <title>Four Hands Game</title>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Four Hands Game</h1>
+            <button id="start" class="start-btn">Start</button>
+            <button id="restart" class="restart-btn">Restart Game</button>
+            <h3 id="numbers">???</h3>
+            <div id="score" class="score">
+                <p>Player: 0</p>
+                <p>Computer: 0</p>
+            </div>
+        </header>
+        <h2>Computer Selection</h2>
+
+        <div class="handcontainer">
+            <div class="hands">
+                <img id="firsthand" src="fistleft.png"></i>
+                <img id="secondhand" src="fistright.png"></i>
+            </div>
+        </div>
+        <div class="totalnumbers">
+            <h3 id="zero">0</h3>
+            <h3 id="five">5</h3>
+            <h3 id="ten">10</h3>
+            <h3 id="fifteen">15</h3>
+            <h3 id="twenty">20</h3>
+        </div>
+    </div>
+
+    <!--Modal-->
+    <div class="modal">
+        <div id="result" class="modal-content">
+            <h1>You Win</h1>
+        </div>
+    </div>
+
+
+
+    <script src="js/main.js"></script>
+</body>
+</html>
