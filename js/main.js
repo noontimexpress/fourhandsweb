@@ -154,7 +154,7 @@ function getComputerChoice() {
     }
 }
 
-button.addEventListener("click", function(event) {
+function resetround() {
     zero.style.color = "#333333";
     five.style.color = "#333333";
     ten.style.color = "#333333";
@@ -163,6 +163,10 @@ button.addEventListener("click", function(event) {
     hzero.style.color = "#333333";
     hfive.style.color = "#333333";
     hten.style.color = "#333333";
+}
+
+button.addEventListener("click", function(event) {
+    resetround();
     speechRec.start();
     setTimeout("getComputerChoice()", 3000);
     setTimeout("identifyHands()", 3000);
