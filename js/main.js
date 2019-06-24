@@ -1,4 +1,7 @@
 let knn;
+var hzero = document.getElementById("hzero")
+var hfive = document.getElementById("hfive")
+var hten = document.getElementById("hten")
 
 function setup() {
     createCanvas(320, 240);
@@ -13,10 +16,20 @@ function setup() {
 function gotResult(error, result) {
     if (error) {
         console.error(error);
-    } else {
-        console.log(result);
+        }
+    if (result.label == "zero") {
+            hzero.style.color = "#dc3545";
+        }
+    if (result.label == "five") {
+            hfive.style.color = "#dc3545";
+        }
+    if (result.label == "five1") {
+            hfive.style.color = "#dc3545";
+        }
+    if (result.label == "ten") {
+            hten.style.color = "#dc3545";
+        }
     }
-}
 
 function identifyHands() {
     if (knn.getNumLabels() > 0) {
@@ -142,11 +155,14 @@ function getComputerChoice() {
 }
 
 button.addEventListener("click", function(event) {
-    zero.style.color = "#333333"
-    five.style.color = "#333333"
-    ten.style.color = "#333333"
-    fifteen.style.color = "#333333"
-    twenty.style.color = "#333333"
+    zero.style.color = "#333333";
+    five.style.color = "#333333";
+    ten.style.color = "#333333";
+    fifteen.style.color = "#333333";
+    twenty.style.color = "#333333";
+    hzero.style.color = "#333333";
+    hfive.style.color = "#333333";
+    hten.style.color = "#333333";
     speechRec.start();
     setTimeout("getComputerChoice()", 3000);
     setTimeout("identifyHands()", 3000);
